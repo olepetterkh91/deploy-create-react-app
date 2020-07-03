@@ -1,13 +1,410 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
+
+body, .navbar {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+.btn-rounded {
+  border-radius: 10em;
+}
+
+.member-btns-sm {
+display: none;
+}
+
+@media screen and (max-width: 1024px) {
+.member-btns-lg {
+  display: none;
+}
+.member-btns-sm {
+  display: block;
+}
+}
+
+img {
+max-width: 100%;
+height: auto;
+}
+
+/* --------------------------- image text --------------------------------*/
+
+video {
+  max-width: 100%;
+  height: auto;
+}
+.container-image {
+  position: relative;
+  margin: 0 auto; /* Center it */
+}
+
+.container-image .content {
+  position: absolute; /* Position the background text */
+  bottom: 0; /* At the bottom. Use top:0 to append it to the top */
+  background: rgb(0, 0, 0); /* Fallback color */
+  background: rgba(0, 0, 0, 0.7); /* Black background with 0.5 opacity */
+  color: #f1f1f1; /* Grey text */
+  width: 100%; /* Full width */
+  padding: 20px;
+  height: 200px;
+}
+.container-image .content-large {
+  position: absolute; /* Position the background text */
+  bottom: 0; /* At the bottom. Use top:0 to append it to the top */
+  background: rgb(0, 0, 0); /* Fallback color */
+  background: rgba(0, 0, 0, 0.7); /* Black background with 0.5 opacity */
+  color: #f1f1f1; /* Grey text */
+  width: 100%; /* Full width */
+  padding: 20px;
+  height: 500px;
+  object-fit: cover;
+}
+.container-image .content-light {
+  position: absolute; /* Position the background text */
+  bottom: 0; /* At the bottom. Use top:0 to append it to the top */
+  background: rgb(0, 0, 0); /* Fallback color */
+  background: rgba(0, 0, 0, 0.4); /* Black background with 0.5 opacity */
+  color: #f1f1f1; /* Grey text */
+  width: 100%; /* Full width */
+  padding: 20px;
+  height: 200px;
+}
+
+.content-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 767px) {
+  .content-title {
+    font-size: 1.1rem;
+  }
+}
+@media screen and (max-width: 900px) {
+  .content-title {
+    font-size: 1.5rem;
+  }
+}
+
+.container-image .content-full {
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+
+}
+.player-background {
+  background-image: url('https://smorasstats.com/v4/wp-content/uploads/2020/05/stadium-scaled-1.jpg');
+  background-size: cover;
+}
+
+.player-background .player-content {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.logo-medium {
+  max-width: 40px;
+  border-radius: 50%;
+}
+
+.view-small {
+	height: 300px;
+	width: 100%;
+
+}
+
+.view-medium {
+  height: 500px;
+  width: 100%;
+}
+
+.view-small img {
+	object-fit: cover;
+	width: 100%;
+}
+
+/* IMAGES */
+
+/* ALERTS */
+.floating-alert {
+  display: none;
+  position: absolute;
+  z-index: 999;
+  top: 38px;
+  left: 50%;
+  transform: translateX(-50%);
+  -moz-animation: floatingAlert ease-in 5s forwards;
+  -webkit-animation: floatingAlert ease-in 5s forwards;
+  -o-animation: floatingAlert ease-in 5s forwards;
+  animation: floatingAlert ease-in 5s forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+.floating-alerts .floating-alert:last-of-type {
+  display: block;
+}
+
+@keyframes floatingAlert {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) scale(1.2);
+  }
+
+  9% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+  }
+
+  91% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) scale(1.2);
+  }
+}
+
+@-webkit-keyframes floatingAlert {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) scale(1.2);
+  }
+
+  9% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+  }
+
+  91% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) scale(1.2);
+  }
+}
+/* ALERTS */
+
+.flyout {
+	display:flex;
+	flex-direction: column;
+	min-height:100vh;
+	justify-content: space-between;
+}
+
+.home-feature-box .fa {
+	font-size:6rem;
+}
+
+.home-feature-box span {
+	display: block;
+	color:#111;
+	font-weight:bold;
+	margin-top:1.5rem;
+}
+
+.example-components-list li > a {
+  color: #495057;
+}
+
+.example-components-list li:last-child > a {
+	border-bottom:0;
+}
+
+.example-components-list li > a .fa {
+	color:rgba(0,0,0,.35);
+	float:right;
+}
+
+/* ---------------------- TABLES ---------------------------------------- */
+
+table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+td, th {
+    padding: .75rem;
+    vertical-align: top;
+	border-top: 1px solid #dee2e6;
+	font-weight: 400 !important;
+}
+th {
+    text-align: inherit;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  color: #212529;
+  
+}
+
+div table:parent {
+  overflow-x: auto;
+  box-sizing: border-box;
+}
+
+thead {
+  color: white;
+  background-color: #007bff;
+}
+
+@media screen and (max-width: 768px) {
+  table {
+    font-size: 10px;
+  }
+  td, th {
+    padding: .25rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  table {
+    font-size: 6px;
+  }
+  td, th {
+    padding: .25rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+  }
+}
+
+/* ---------------------- TABLES ---------------------------------------- */
+
+
+/* MODULA */
+
+#jtg-1892, #jtg-1888 {
+  display: none;
+}
+
+/* MODULA */
+
+/* WP GALLERI */
+.nv-single-post-wrap .entry-header, .nv-single-post-wrap .nv-content-wrap, .nv-single-post-wrap .nv-post-navigation, .nv-single-post-wrap .nv-tags-list, .nv-single-post-wrap .nv-thumb-wrap {
+  margin-bottom: 20px;
+}
+
+.blocks-gallery-grid, .wp-block-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.blocks-gallery-item {
+  width: 25%;
+}
+.wp-block-gallery.is-cropped .blocks-gallery-item img {
+  height: 250px;
+  flex: 1;
+  object-fit: cover;
+}
+@media screen and (max-width: 1024px) {
+  .blocks-gallery-item {
+    width: 33.3333%;
+  }
+  .wp-block-gallery.is-cropped .blocks-gallery-item img {
+    height: 250px;
+    flex: 1;
+    object-fit: cover;
+  }
+}
+@media screen and (max-width: 768px) {
+  .blocks-gallery-item {
+    width: 50%;
+  }
+  .wp-block-gallery.is-cropped .blocks-gallery-item img {
+    height: 250px;
+    flex: 1;
+    object-fit: cover;
+  }
+}
+@media screen and (max-width: 500px) {
+  .blocks-gallery-item {
+    width: 100%;
+  }
+  .wp-block-gallery.is-cropped .blocks-gallery-item img {
+    height: 250px;
+    flex: 1;
+    object-fit: cover;
+  }
+}
+
+/* WP GALLERI */
+
+/* ------------------------ rl-gallery -----------------------------------*/
+
+.rl-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.rl-gallery .rl-gallery-item {
+    width: calc(25% - 2px);
+    margin: 1px;
+    height: 150px;
+    object-fit: cover;
+}
+
+#rl-gallery-1 .rl-gallery-item {
+  height: 300px;
+}
+
+.rl-gallery .rl-gallery-item {
+    text-decoration: none !important;
+    box-shadow: none !important;
+    text-align: center;
+}
+.rl-gallery .rl-gallery-item {
+    overflow: hidden;
+}
+
+
+@media (max-width: 6000px) and (min-width: 1201px) {
+  .rl-gallery .rl-gallery-item {
+      width: calc(16.666666666666% - 2px);
+      
+  }
+}
+
+@media (max-width: 1200px) {
+  .rl-gallery .rl-gallery-item {
+      width: calc(16.666666666666% - 2px);
+      
+  }
+}
+
+@media (max-width: 992px) {
+  .rl-gallery .rl-gallery-item {
+      width: calc(25% - 2px);
+  }
+}
+@media (max-width: 767px){
+  .rl-gallery .rl-gallery-item {
+      width: calc(50% - 2px);
+  }
+}
+
+/* ------------------------ rl-gallery -----------------------------------*/
+
+.loadingSpinner {
+	max-width: 4rem;
 }

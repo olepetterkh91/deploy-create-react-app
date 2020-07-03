@@ -12,37 +12,31 @@ import Home from './components/Home/Home'
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
 
+// WP CORE
 import BlogPostList from './components/Blog/BlogPostList'
-import SinglePostHeroku from './components/Blog/SinglePostHeroku'
+import SinglePost from './components/Blog/SinglePost'
+
+// MEDIA
+import AddMedia from './components/Media/AddMedia'
 
 import PageList from './components/Pages/PageList'
 import SinglePage from './components/Pages/SinglePage'
 
-
-import SingleTeam from './components/Team/Team'
-import Teams from './components/Team/Teams'
-import Sesonger from './components/Team/Sesonger'
-import Sesong from './components/Team/Sesong'
-import PlayerList from './components/Player/PlayerList';
-import Player from './components/Player/Player'
-
-import Kamper from './components/Kamp/Kamper'
-import SingleKamp from './components/Kamp/SingleKamp'
-
-import LightboxPage from "./components/Lightbox/Lightbox";
-import Galleries from './components/Image/Galleries'
-import Gallery from './components/Image/Gallery'
-import Images from './components/Image/Images'
-import SingleImage from './components/Image/SingleImage'
-
-import ChartsPage from "./components/Charts/ChartsPage";
-import Historikk from "./components/Historikk/Historikk";
-import SingleHistorikk from "./components/Historikk/SingleHistorikk";
-import Hostcup from './components/Hostcup/Hostcup'
-import SingleHostcup from './components/Hostcup/SIngleHostcup'
+// Add post / recipe /post type
+import CreatePost from './components/Post/CreatePost'
+import EditPost from './components/Post/EditPost'
 
 
-// Buddypress new //
+// Custom post types
+import CreateRecipe from './components/Post/CreateRecipe'
+import EditRecipe from './components/Post/EditRecipe'
+
+// RECIPES
+import Recipe from './components/Recipe/Recipe'
+import RecipeCategories from './components/Recipe/RecipeCategories'
+import RecipeCategory from './components/Recipe/RecipeCategory'
+import RecipePostLists from './components/Blog/RecipePostList'
+
 // Buddypress
 import Member from './components/BuddyPress/Member/Member';
 import Members from './components/BuddyPress/Member/Members';
@@ -62,30 +56,15 @@ import SingleGroup from "./components/BuddyPress/Group/SingleGroup";
 
 import NotificationsPage from './components/BuddyPress/Notifications/NotificationsPage'
 
-
-
-
-import Videos from './components/Footballstats/Videos'
-import SingleVideo from './components/Footballstats/SingleVideo'
-
-// ADMIN
-import Admin from './components/Admin/Admin'
-import AddImage from './components/Admin/AddImage'
-import AddGallery from './components/Admin/AddGallery'
-import GalleriesAdmin from "./components/Admin/GalleriesAdmin";
-import SingleGalleryAdmin from "./components/Admin/SingleGalleryAdmin";
-
-
-import Sponsor from "./components/Sponsor/Sponsor";
+// Custom components
+import View from './components/View/View'
 import ViewJarallax from "./components/View/ViewJarallax";
-import BlogPostListHeroku from "./components/Blog/BlogPostListHeroku";
-import SinglePost from "./components/Blog/SinglePostHeroku";
 
 function App() {
 
-    // appUserId is wordpress user id
-    // appBPMemberId is Buddypress member id of user, which is different from appUserId
-    const wordpressUrl = "https://smorasstats.com/v4/"
+    const localWordpress = "http://localhost/dashboard/OLEPETTER/WORDPRESS/BUDDYPRESS/"
+    const camillahardilla = "https://camillahardilla.com/"
+    const progitek = "https://progitek.no/privat/bp/wp-json/wp/v2/"
 
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("token")),
@@ -104,7 +83,8 @@ function App() {
     },
     isSearchOpen: false,
     darkBackground: false,
-    wordpressBaseUrl: wordpressUrl
+    wordpressUrl: camillahardilla + "wp-json/wp/v2/",
+    wordpressBaseUrl: localWordpress
 }
 
 function ourReducer(draft, action) {
@@ -119,7 +99,7 @@ function ourReducer(draft, action) {
             return
         case "appBPMemberIdFetched": 
             draft.appBPMemberIdFetched = true
-            draft.appBPMemberId = action.value
+            draft.user.appUserId = action.value
             return
         case "userNotificationsCount":
             draft.appUserNotifications = true
@@ -185,16 +165,14 @@ useEffect(() => {
 }, [state.loggedIn])
 
 useEffect(() => {
-    if (state.appUserIdFetched) {
-        localStorage.setItem("appUserId", state.user.appUserId)
-    }
-}, [state.appUserIdFetched])
-
-useEffect(() => {
     if (state.appBPMemberIdFetched) {
-        localStorage.setItem("appBPMemberId", state.user.appBPMemberId)
+        localStorage.setItem("appUserId", state.user.appUserId)
+    } else {
+        localStorage.removeItem("appUserId")
     }
-}, [state.appUserIdFetched])
+}, [state.appBPMemberIdFetched])
+
+
 
 const expirationToken = new Date(localStorage.getItem("appTokenExpiration")).getTime();
 const currentTime = new Date().getTime()
@@ -220,8 +198,8 @@ useEffect(() => {
         const ourRequest = Axios.CancelToken.source()
         async function fetchResults() {
             try {
-                const response = await Axios.post("https://smorasstats.com/v4/wp-json/jwt-auth/v1/token/validate", {}, {headers: headers});
-                //console.log("Validering av token: ", response.data)
+                const response = await Axios.post(state.wordpressBaseUrl +  "wp-json/jwt-auth/v1/token/validate", {}, {headers: headers});
+
                 if (!response.data) {
                     dispatch({type: "logout"});
                 }
@@ -245,21 +223,15 @@ useEffect(() => {
           <Switch>
             <Route path="/" exact>
               <>
-                <ViewJarallax image="https://upload.wikimedia.org/wikipedia/commons/f/f0/Sl%C3%A5tthaug_idrettsanlegg.jpg" preText="Velkommen til " text="Smørås IL" />
+                <ViewJarallax image="https://upload.wikimedia.org/wikipedia/commons/f/f0/Sl%C3%A5tthaug_idrettsanlegg.jpg" preText="Velkommen til " text="buddypress" />
                 <Home/>
               </>
             </Route>
             <Route path="/innlegg/:page" exact>
-                <BlogPostList/>
+              <BlogPostList/>
             </Route>
             <Route path="/innlegg/single/:id" exact>
-                <SinglePost/>
-            </Route>
-            <Route path="/innlegg/heroku/:page" exact>
-              <BlogPostListHeroku/>
-            </Route>
-            <Route path="/innlegg/heroku/single/:id" exact>
-              <SinglePostHeroku/>
+              <SinglePost/>
             </Route>
 
             <Route path="/sider" exact >
@@ -269,51 +241,19 @@ useEffect(() => {
                 <SinglePage />
             </Route>
 
-            <Route path="/historikk" exact>
-              <Historikk />
-            </Route>
-            <Route path="/historikk/:id" exact>
-              <SingleHistorikk/>
-            </Route>
-            <Route path="/hostcup" exact>
-                <Hostcup />
-            </Route>
-            <Route path="/hostcup/single/:id" exact>
-                <SingleHostcup />
-            </Route>
-
-            <Route path="/teams" exact>
-                <Teams />
-            </Route>
-            <Route path="/teams/single/:id" exact>
-                <SingleTeam />
-            </Route> 
-            <Route path="/sesonger" exact>
-                <Sesonger />
-            </Route>                            
-            <Route path="/kamper" exact>
-                <Kamper />
-            </Route>
-            <Route path="/kamper/:id" exact>
-                <SingleKamp />
-            </Route>
-            
-            <Route path="/sesonger/:id" exact>
-                <Sesong />
-            </Route>
-            <Route path="/players" exact>
-                <PlayerList />
-            </Route>
-            <Route path="/players/:id" exact>
-                <Player />
-            </Route>
-
-            <Route path="/sponsor" exact>
-                <Sponsor/>
-            </Route>
 
 
 
+            <Route path="/create-post" exact>
+                <CreatePost/>
+            </Route>
+            <Route path="/edit-post/:id">
+                <EditPost/>
+            </Route>
+
+            <Route path="/add-media" exact>
+                <AddMedia />
+            </Route>
 
             <Route path="/bp/members" exact>
                 <Members />
@@ -354,47 +294,27 @@ useEffect(() => {
                 <SingleGroup/>
             </Route>
 
-            <Route path="/videos" exact>
-                <Videos />
+            <Route path="/create-recipe" exact>
+                <CreateRecipe/>
             </Route>
-
-            <Route path="/video/:id" exact>
-                <SingleVideo />
+            <Route path="/edit-recipe/:id">
+                <EditRecipe/>
             </Route>
-
-            <Route path="/galleries" exact>
-                <Galleries />
+            <Route path="/oppskrift/:id" exact>
+                <Recipe />
             </Route>
-            <Route path="/gallery/:id" exact>
-                <Gallery />
+            <Route path="/categories" exact>
+                <>
+                    <View text="Kategorier" image="https://camillahardilla.com/wp-content/uploads/2020/02/flat-lay-photography-of-vegetable-salad-on-plate-1640777-scaled.jpg" />
+                    <RecipeCategories />
+                </>
             </Route>
-            <Route path="/images" exact>
-                <Images />
+            <Route path="/category/:id" exact>
+                <RecipeCategory />
             </Route>
-            <Route path="/images/:id" exact>
-                <SingleImage />
-            </Route>
-            <Route path="/lightbox" exact>
-              <LightboxPage/>
-            </Route>
-            <Route path="/chart" exact>
-              <ChartsPage/>
-            </Route>
-
-            <Route path="/admin" exact>
-                <Admin />
-            </Route>
-            <Route path="/admin/add-image" exact>
-                <AddImage />
-            </Route>
-            <Route path="/admin/add-gallery" exact>
-                <AddGallery />
-            </Route>
-            <Route path="/admin/galleries" exact>
-                <GalleriesAdmin/>
-            </Route>
-            <Route path="/admin/gallery/:id" exact>
-                <SingleGalleryAdmin/>
+            
+            <Route path="/oppskrifter/:page" exact>
+                <RecipePostLists/>
             </Route>
 
           </Switch>
